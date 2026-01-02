@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('course_session_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('student_id')->constrained('users')->cascadeOnDelete();
+            $table->unique(['course_session_id', 'student_id']);
+            $table->enum('status', ['present', 'absent', 'retard']);
             $table->timestamps();
         });
     }
